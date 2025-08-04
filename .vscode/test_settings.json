@@ -1,0 +1,23 @@
+# .vscode/test_settings.json
+
+import json
+import os
+
+def test_settings_json_exists():
+    assert os.path.exists('.vscode/settings.json'), "settings.json does not exist"
+
+def test_pytest_args():
+    with open('.vscode/settings.json') as f:
+        settings = json.load(f)
+    assert "python.testing.pytestArgs" in settings
+    assert settings["python.testing.pytestArgs"] == ["src"]
+
+def test_pytest_enabled():
+    with open('.vscode/settings.json') as f:
+        settings = json.load(f)
+    assert settings.get("python.testing.pytestEnabled") is True
+
+def test_unittest_disabled():
+    with open('.vscode/settings.json') as f:
+        settings = json.load(f)
+    assert settings.get("python.testing.unittestEnabled") is False
